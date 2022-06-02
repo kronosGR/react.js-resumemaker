@@ -8,7 +8,7 @@ function Maker() {
   return (
     <div>
       <Toolbar />
-      <ColorPicker />
+      <ColorPicker top={200} left={100} />
     </div>
   );
 }

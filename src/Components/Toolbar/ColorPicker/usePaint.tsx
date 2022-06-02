@@ -6,7 +6,7 @@ const usePaint = (canvas: React.MutableRefObject<HTMLCanvasElement>, size: numbe
       '2d'
     ) as CanvasRenderingContext2D;
     if (context !== undefined) {
-      context.rect(0, 0, size, size);
+      context.rect(0, 0, size, 30);
 
       const gradient = context?.createLinearGradient(0, 0, size, 0);
       for (let i = 0; i <= 360; i += 12) {

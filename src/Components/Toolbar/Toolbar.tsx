@@ -4,15 +4,26 @@ import Font from './Font';
 import FontSize from './FontSize';
 import Sections from './Sections';
 
-import classes from './Toolbar.module.css';
+import styled from 'styled-components';
+
+const ToolbarWrapper = styled.div`
+  width: 80%;
+  display: flex;
+  gap: 1rem;
+  margin: 0 auto;
+  border: 1px solid black;
+  justify-content: center;
+  padding: 2rem;
+`;
+
 function Toolbar() {
   return (
-    <div className={classes.container}>
+    <ToolbarWrapper>
       <Sections />
       <Color />
       <Font />
       <FontSize />
-    </div>
+    </ToolbarWrapper>
   );
 }
 
