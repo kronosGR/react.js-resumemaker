@@ -1,6 +1,7 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
 import usePaint from './usePaint';
+import SVGhandle from '../../../Svg/SVGhandle';
 
 export const ColorBoxWrapper = styled.div`
   width: 200px;
@@ -17,6 +18,7 @@ function ColorBox() {
   return (
     <ColorBoxWrapper>
       <canvas ref={canvas} />
+      <SVGhandle />
     </ColorBoxWrapper>
   );
 }
