@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import styled from 'styled-components';
+import usePaint from './usePaint';
 
 export const ColorBoxWrapper = styled.div`
   width: 200px;
@@ -9,7 +10,9 @@ export const ColorBoxWrapper = styled.div`
 `;
 
 function ColorBox() {
-  const canvas = useRef(null);
+  const canvas = useRef() as React.MutableRefObject<HTMLCanvasElement>;
+
+  usePaint(canvas, 200);
 
   return (
     <ColorBoxWrapper>

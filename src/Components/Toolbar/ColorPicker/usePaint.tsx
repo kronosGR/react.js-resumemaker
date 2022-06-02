@@ -1,8 +1,8 @@
 import React, { Ref, useEffect } from 'react';
 
-const usePaint = (canvas: HTMLCanvasElement, size: number) => {
+const usePaint = (canvas: React.MutableRefObject<HTMLCanvasElement>, size: number) => {
   useEffect(() => {
-    const context: CanvasRenderingContext2D = canvas.getContext(
+    const context: CanvasRenderingContext2D = canvas.current.getContext(
       '2d'
     ) as CanvasRenderingContext2D;
     if (context !== undefined) {
