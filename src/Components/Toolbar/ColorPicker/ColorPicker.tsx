@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import styled from 'styled-components';
 import ColorBar from './ColorBar';
+import Modal from './Modal';
 
 interface Props {
   top: number;
@@ -22,12 +23,17 @@ const ColorPickerWrapper = styled.div.attrs<ItemProps>((itemProps) => ({
 `;
 
 export default function ColorPicker({ top, left }: Props) {
-  const [topC, setTopC] = useState(top);
-  const [leftC, setLeftC] = useState(left);
+  const [color, setColor] = useState('#000000');
+  const [show, setShow] = useState(false);
+
+  const modal = useRef() as React.MutableRefObject<HTMLDivElement>;
 
   return (
     <ColorPickerWrapper top={top} left={left}>
-      <ColorBar top={200} left={100} />
+      <div onClick={() => setShow(true)} />
+      <Modal modal={modal} show={show} onClose={() => setShow(false)}>
+        <ColorBar top={200} left={100} />
+      </Modal>
     </ColorPickerWrapper>
   );
 }
