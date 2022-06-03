@@ -41,7 +41,7 @@ const HandleWrapper = styled.div.attrs<ItemProps>((adProps) => ({
 export default function ColorBar({ top, left }: Props) {
   const canvas = useRef() as React.MutableRefObject<HTMLCanvasElement>;
 
-  usePaint(canvas, 200);
+  usePaint(canvas);
 
   return (
     <ColorBoxWrapper>

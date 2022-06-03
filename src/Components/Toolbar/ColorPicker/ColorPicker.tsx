@@ -22,6 +22,11 @@ const ColorPickerWrapper = styled.div.attrs<ItemProps>((itemProps) => ({
   position: absolute;
 `;
 
+const Button = styled.div`
+  padding: 1rem;
+  border: 1px solid black;
+`;
+
 export default function ColorPicker({ top, left }: Props) {
   const [color, setColor] = useState('#000000');
   const [show, setShow] = useState(false);
@@ -30,7 +35,7 @@ export default function ColorPicker({ top, left }: Props) {
 
   return (
     <ColorPickerWrapper top={top} left={left}>
-      <div onClick={() => setShow(true)} />
+      <Button onClick={() => setShow(true)}>Show</Button>
       <Modal modal={modal} show={show} onClose={() => setShow(false)}>
         <ColorBar top={200} left={100} />
       </Modal>
