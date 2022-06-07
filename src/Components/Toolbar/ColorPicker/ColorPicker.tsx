@@ -10,18 +10,13 @@ interface Props {
   left: number;
 }
 
-interface ItemProps {
-  top: number;
-  left: number;
-}
-
-const ColorPickerWrapper = styled.div.attrs<ItemProps>((itemProps) => ({
-  style: {
-    top: itemProps.top + 'px',
-    left: itemProps.left + 'px',
-  },
-}))<ItemProps>`
-  position: absolute;
+export const ColorPickerWrapper = styled.div`
+  user-select: none;
+  .swatch {
+    width: 100px;
+    height: 50px;
+    background: ${(p) => p.color};
+  }
 `;
 
 export const PickerOuter = styled.div`
@@ -45,18 +40,50 @@ const Button = styled.div`
 `;
 
 export default function ColorPicker({ top, left }: Props) {
-  const [color, setColor] = useState('#000000');
+  const [color, setColor] = useState(`hsla(180, 100%, 50%, 1)`);
   const [show, setShow] = useState(false);
+  const [offsetTop, setOffsetTop] = useState(0);
+  const [offsetLeft, setOffsetLeft] = useState(0);
+  const [hue, setHue] = useState(180);
+  const [hueX, setHueX] = useState(() => squareSize / 2 - barSize / 2);
 
   const modal = useRef() as React.MutableRefObject<HTMLDivElement>;
 
+  useEffect(() => {
+    function setOffsets() {
+      setOffsetTop(modal.current.offsetTop);
+      setOffsetLeft(modal.current.offsetLeft);
+    }
+
+    if (show) {
+      setOffsets();
+      window.addEventListener('resize', setOffsets);
+    } else {
+      window.removeEventListener('resize', setOffsets);
+    }
+
+    // cleanup
+    return () => {
+      window.removeEventListener('resize', setOffsets);
+    };
+  }, [show]);
+
+  useEffect(() => {
+    setColor(`hsla(${hue}, 100%, 50%. 1)`);
+  });
+
   return (
-    <ColorPickerWrapper top={top} left={left}>
+    <ColorPickerWrapper color={color}>
       <Button onClick={() => setShow(true)}>Show</Button>
       <Modal modal={modal} show={show} onClose={() => setShow(false)}>
         <PickerOuter>
           <PickerInner></PickerInner>
-          <ColorBar top={200} left={100} />
+          <ColorBar
+            hueX={hueX}
+            offsetLeft={offsetLeft}
+            setHueX={setHueX}
+            setHue={setHue}
+          />
         </PickerOuter>
       </Modal>
     </ColorPickerWrapper>

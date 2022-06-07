@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { Dispatch, useRef } from 'react';
 import styled from 'styled-components';
 import usePaint from './usePaint';
 import SVGhandle from '../../../Svg/SVGhandle';
@@ -8,8 +8,11 @@ interface ItemProps {
 }
 
 interface Props {
-  top: number;
-  left: number;
+  hueX: number;
+  offsetLeft: number;
+  animate?: any;
+  setHueX: (value: number) => void;
+  setHue: (value: number) => void;
 }
 
 export const ColorBoxWrapper = styled.div`
@@ -38,7 +41,7 @@ const HandleWrapper = styled.div.attrs<ItemProps>((adProps) => ({
   }
 `;
 
-export default function ColorBar({ top, left }: Props) {
+export default function ColorBar({ hueX, offsetLeft, animate, setHueX, setHue }: Props) {
   const canvas = useRef() as React.MutableRefObject<HTMLCanvasElement>;
 
   usePaint(canvas);
