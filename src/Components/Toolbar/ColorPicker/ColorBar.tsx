@@ -2,9 +2,12 @@ import React, { Dispatch, useRef } from 'react';
 import styled from 'styled-components';
 import usePaint from './usePaint';
 import SVGhandle from '../../../Svg/SVGhandle';
+import config from '../../../Constants/config';
 
+const { squareSize, barSize, delay } = config;
 interface ItemProps {
-  left: string;
+  left: number;
+  animate: any;
 }
 
 interface Props {
@@ -15,16 +18,22 @@ interface Props {
   setHue: (value: number) => void;
 }
 
+export const Canvas = styled.canvas.attrs((p) => ({
+  width: squareSize,
+  height: barSize,
+}))``;
+
 export const ColorBoxWrapper = styled.div`
-  width: 200px;
-  height: 200px;
-  cursor: crosshair;
-  border: 1px solid black;
+  position: relative;
+  width: ${squareSize + 'px'};
+  height: ${barSize + 'px'};
+  cursor: ew-resize;
 `;
 
 const HandleWrapper = styled.div.attrs<ItemProps>((adProps) => ({
   style: {
     left: adProps.left + 'px',
+    transition: adProps.animate ? 'left .25s ease-out' : '0s',
   },
 }))<ItemProps>`
   position: absolute;
@@ -32,8 +41,8 @@ const HandleWrapper = styled.div.attrs<ItemProps>((adProps) => ({
   display: flex;
   align-items: center;
   justify-content: space-between;
-  width: 200px;
-  height: 30px;
+  width: ${barSize}px;
+  height: ${barSize}px;
   pointer-events: none;
   svg {
     width: 100%;
@@ -48,10 +57,10 @@ export default function ColorBar({ hueX, offsetLeft, animate, setHueX, setHue }:
 
   return (
     <ColorBoxWrapper>
-      <canvas ref={canvas} />
-      <HandleWrapper left='10'>
+      <HandleWrapper left={hueX} animate={animate}>
         <SVGhandle />
       </HandleWrapper>
+      <Canvas ref={canvas} />
     </ColorBoxWrapper>
   );
 }
